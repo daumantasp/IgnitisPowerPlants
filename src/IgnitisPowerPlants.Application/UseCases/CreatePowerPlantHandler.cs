@@ -1,5 +1,7 @@
 ﻿using IgnitisPowerPlants.Application.Commands;
+using IgnitisPowerPlants.Application.Exceptions;
 using IgnitisPowerPlants.Application.Interfaces;
+using IgnitisPowerPlants.Application.Validation.PowerPlant;
 using IgnitisPowerPlants.Domain.Entities;
 
 namespace IgnitisPowerPlants.Application.UseCases
@@ -7,20 +9,24 @@ namespace IgnitisPowerPlants.Application.UseCases
     public class CreatePowerPlantHandler
     {
         private readonly IPowerPlantsRepository _powerPlantsRepository;
+        private readonly PowerPlantValidator _powerPlantValidator;
 
-        public CreatePowerPlantHandler(IPowerPlantsRepository powerPlantsRepository)
+        public CreatePowerPlantHandler(IPowerPlantsRepository powerPlantsRepository, PowerPlantValidator powerPlantValidator)
         {
             _powerPlantsRepository = powerPlantsRepository;
+            _powerPlantValidator = powerPlantValidator;
         }
 
         public async Task HandleAsync(CreatePowerPlantCommand command)
         {
-            if (string.IsNullOrEmpty(command.Owner))
-                throw new ArgumentException("Owner cannot be null or empty.");
-            if (!command.Power.HasValue)
-                throw new ArgumentException("Power cannot be null.");
-            if (!command.ValidFrom.HasValue)
-                throw new ArgumentException("Valid From cannot be null.");
+            var validationResult = _powerPlantValidator.Validate(command);
+            if (!validationResult.IsValid)
+            {
+                var error = validationResult.Errors
+                    .First();
+                var errorMessage = PowerPlantValidationErrorMessageFactory.Create(error);
+                throw new PowerPlantValidationException(errorMessage);
+            }
 
             var entity = new PowerPlant
             {

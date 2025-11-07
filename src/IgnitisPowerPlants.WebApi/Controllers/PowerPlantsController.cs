@@ -1,4 +1,5 @@
 ﻿using IgnitisPowerPlants.Application.Commands;
+using IgnitisPowerPlants.Application.Exceptions;
 using IgnitisPowerPlants.Application.Queries;
 using IgnitisPowerPlants.Application.UseCases;
 using IgnitisPowerPlants.WebApi.Contracts.Requests;
@@ -41,9 +42,13 @@ namespace IgnitisPowerPlants.WebApi.Controllers
                 await _createPowerPlantHandler.HandleAsync(command);
                 return Created();
             }
-            catch (ArgumentException ex)
+            catch (PowerPlantValidationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { Error = ex.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { Error = "An unexpected error occurred." });
             }
         }
     }
