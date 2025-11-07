@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IgnitisPowerPlants.Application\IgnitisPowerPlants.Application.csproj" />
     <ProjectReference Include="..\IgnitisPowerPlants.Domain\IgnitisPowerPlants.Domain.csproj" />
   </ItemGroup>
 
