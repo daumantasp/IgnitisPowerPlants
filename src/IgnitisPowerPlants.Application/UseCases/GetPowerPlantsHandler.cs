@@ -18,7 +18,7 @@ namespace IgnitisPowerPlants.Application.UseCases
             var pageNumber = query.PageNumber > 0 ? query.PageNumber.Value : 1;
             var pageSize = query.PageSize > 0 ? query.PageSize.Value : 10;
 
-            var powerPlants = await _powerPlantsRepository.GetAsync(pageNumber, pageSize);
+            var powerPlants = await _powerPlantsRepository.GetAsync(pageNumber, pageSize, query.owner);
             var powerPlantsDtos = powerPlants.Select(pp => pp.ToDto()).ToList();
 
             return new PowerPlantsResponse { PowerPlants = powerPlantsDtos, PageNumber = pageNumber, PageSize = pageSize };

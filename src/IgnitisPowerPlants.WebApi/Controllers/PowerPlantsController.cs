@@ -16,9 +16,9 @@ namespace IgnitisPowerPlants.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync([FromQuery] int? pageNumber, int? pageSize)
+        public async Task<IActionResult> GetAsync([FromQuery] int? pageNumber, int? pageSize, string? owner)
         {
-            var response = await _getPowerPlantsHandler.HandleAsync(new GetPowerPlantQuery(pageNumber, pageSize));
+            var response = await _getPowerPlantsHandler.HandleAsync(new GetPowerPlantQuery(pageNumber, pageSize, owner));
             return Ok(response);
         }
     }
