@@ -1,4 +1,4 @@
-using IgnitisPowerPlants.Application.UseCases;
+using IgnitisPowerPlants.Application;
 using IgnitisPowerPlants.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddInfrastructure(connectionString);
-builder.Services.AddScoped<GetPowerPlantsHandler>();
+builder.Services.AddApplicationServices();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
