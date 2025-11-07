@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IgnitisPowerPlants.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext
+    internal class ApplicationDbContext : DbContext
     {
         public DbSet<PowerPlant> PowerPlants { get; set; }
 

@@ -2,16 +2,11 @@
 
 namespace IgnitisPowerPlants.Infrastructure.Persistence
 {
-    public static class DataSeeder
+    internal static class TestData
     {
-        public static void SeedPowerPlants(ApplicationDbContext dbContext)
+        internal static IEnumerable<PowerPlant> GetPowerPlants()
         {
-            if (dbContext.PowerPlants.Any())
-            {
-                return;
-            }
-
-            dbContext.AddRange(
+            return [
                 new PowerPlant
                 {
                     Owner = "Vardenis Pavardenis",
@@ -32,9 +27,8 @@ namespace IgnitisPowerPlants.Infrastructure.Persistence
                     Power = 12.5m,
                     ValidFrom = new DateOnly(2019, 9, 10),
                     ValidTo = null
-                });
-
-            dbContext.SaveChanges();
+                }
+            ];
         }
     }
 }
