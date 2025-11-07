@@ -1,9 +1,10 @@
 ﻿using IgnitisPowerPlants.Application.Interfaces;
+using IgnitisPowerPlants.Application.Mapper;
 using IgnitisPowerPlants.Application.Responses;
 
 namespace IgnitisPowerPlants.Application.UseCases
 {
-    internal class GetPowerPlantsHandler
+    public class GetPowerPlantsHandler
     {
         private readonly IPowerPlantsRepository _powerPlantsRepository;
         public GetPowerPlantsHandler(IPowerPlantsRepository powerPlantsRepository)
