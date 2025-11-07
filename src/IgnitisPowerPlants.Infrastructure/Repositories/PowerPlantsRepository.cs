@@ -19,7 +19,7 @@ namespace IgnitisPowerPlants.Infrastructure.Repositories
             var query = _dbContext.PowerPlants.AsQueryable();
             if (!string.IsNullOrEmpty(owner))
             {
-                query = query.Where(pp => pp.Owner.ToLower().Contains(owner.ToLower()));
+                query = query.Where(pp => EF.Functions.Collate(pp.Owner, "SQL_Latin1_General_CP1_CI_AI").Contains(owner));
             }
             return await query
                 .Skip((pageNumber - 1) * pageSize)
