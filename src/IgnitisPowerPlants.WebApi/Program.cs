@@ -14,6 +14,17 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+// Seed PowerPlants data
+if (app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.EnsureCreated();
+        DataSeeder.SeedPowerPlants(dbContext);
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
