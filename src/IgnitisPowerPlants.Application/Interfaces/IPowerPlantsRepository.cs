@@ -4,6 +4,6 @@ namespace IgnitisPowerPlants.Application.Interfaces
 {
     public interface IPowerPlantsRepository
     {
-        Task<IEnumerable<PowerPlant>> GetAsync();
+        Task<IEnumerable<PowerPlant>> GetAsync(int pageNumber, int pageSize);
     }
 }

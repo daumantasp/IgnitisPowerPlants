@@ -1,4 +1,5 @@
-﻿using IgnitisPowerPlants.Application.UseCases;
+﻿using IgnitisPowerPlants.Application.Queries;
+using IgnitisPowerPlants.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IgnitisPowerPlants.WebApi.Controllers
@@ -15,10 +16,10 @@ namespace IgnitisPowerPlants.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAsync([FromQuery] int? pageNumber, int? pageSize)
         {
-            var response = await _getPowerPlantsHandler.HandleAsync();
-            return Ok(response.PowerPlants);
+            var response = await _getPowerPlantsHandler.HandleAsync(new GetPowerPlantQuery(pageNumber, pageSize));
+            return Ok(response);
         }
     }
 }

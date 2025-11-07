@@ -14,7 +14,11 @@ namespace IgnitisPowerPlants.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<PowerPlant>> GetAsync() => 
-            await _dbContext.PowerPlants.ToListAsync();
+        public async Task<IEnumerable<PowerPlant>> GetAsync(int pageNumber, int pageSize) =>
+            await _dbContext.PowerPlants
+            .OrderBy(pp => pp.Id)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 }
