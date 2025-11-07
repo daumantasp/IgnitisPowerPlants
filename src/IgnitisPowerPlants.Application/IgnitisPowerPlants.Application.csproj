@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IgnitisPowerPlants.Domain\IgnitisPowerPlants.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
