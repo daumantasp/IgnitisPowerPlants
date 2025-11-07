@@ -26,5 +26,11 @@ namespace IgnitisPowerPlants.Infrastructure.Repositories
                 .Take(pageSize)
                 .ToListAsync();
         }
+
+        public Task CreateAsync(PowerPlant powerPlant)
+        {
+            _dbContext.PowerPlants.Add(powerPlant);
+            return _dbContext.SaveChangesAsync();
+        }
     }
 }
