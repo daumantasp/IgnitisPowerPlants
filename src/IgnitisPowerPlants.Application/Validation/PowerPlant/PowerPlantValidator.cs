@@ -3,8 +3,16 @@ using System.Text.RegularExpressions;
 
 namespace IgnitisPowerPlants.Application.Validation.PowerPlant
 {
+
     public class PowerPlantValidator
     {
+        private readonly PowerPlantValidatorValues _values;
+
+        public PowerPlantValidator(PowerPlantValidatorValues values)
+        {
+            _values = values;
+        }
+
         public ValidationResult<PowerPlantValidationError> Validate(CreatePowerPlantCommand command)
         {
             var errors = new List<PowerPlantValidationError>();
@@ -13,7 +21,7 @@ namespace IgnitisPowerPlants.Application.Validation.PowerPlant
             {
                 errors.Add(PowerPlantValidationError.OwnerNotProvided);
             }
-            else if (!Regex.IsMatch(command.Owner, @"^[A-Za-zĄČĘĖĮŠŲŪŽąčęėįšųūž]+\s[A-Za-zĄČĘĖĮŠŲŪŽąčęėįšųūž]+$"))
+            else if (!Regex.IsMatch(command.Owner, _values.OwnerRegex))
             {
                 errors.Add(PowerPlantValidationError.OwnerInvalidFormat);
             }
@@ -22,7 +30,7 @@ namespace IgnitisPowerPlants.Application.Validation.PowerPlant
             {
                 errors.Add(PowerPlantValidationError.PowerNotProvided);
             }
-            else if (command.Power < 0m || command.Power > 200m)
+            else if (command.Power < _values.MinPower || command.Power > _values.MaxPower)
             {
                 errors.Add(PowerPlantValidationError.PowerOutOfRange);
             }

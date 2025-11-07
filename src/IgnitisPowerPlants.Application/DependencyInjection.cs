@@ -9,6 +9,11 @@ namespace IgnitisPowerPlants.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<GetPowerPlantsHandler>();
+            services.AddScoped(_ => new PowerPlantValidatorValues(
+                OwnerRegex: @"^[A-Za-zĄČĘĖĮŠŲŪŽąčęėįšųūž]+\s[A-Za-zĄČĘĖĮŠŲŪŽąčęėįšųūž]+$",
+                MinPower: 0m,
+                MaxPower: 200m
+            ));
             services.AddScoped<PowerPlantValidator>();
             services.AddScoped<CreatePowerPlantHandler>();
 
